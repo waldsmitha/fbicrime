@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 //Styling
@@ -8,7 +8,12 @@ import { motion } from "framer-motion";
 //Media
 import skull from "../media/skull.png";
 
+import { CrimeContext2 } from "../CrimeContext";
+
 const Header = () => {
+  const [ori, offense, fromDate, toDate] = useContext(CrimeContext2);
+  // console.log(ori.ori);
+
   return (
     <StyledHeader>
       <div className="logo">

@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 
 //Styling
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { CrimeContext } from "../CrimeContext";
 
 const About = () => {
+  const value = useContext(CrimeContext);
+
+  const [ori, offense, fromDate, toDate] = useContext(CrimeContext);
+  const [oriValue, setOri] = ori.ori;
+
   return (
     <StyledAbout>
+      <div>{oriValue}</div>
+      {/* Adding to state */}
+      <button onClick={() => setOri((prevOri) => [...prevOri] + "test")}>
+        SetOri
+      </button>
       <h2>About Menu</h2>
       <p>
         The FBI Crime Data API is a read-only web service that returns JSON or
