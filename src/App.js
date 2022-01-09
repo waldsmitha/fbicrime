@@ -10,7 +10,7 @@ import Help from "./pages/Help";
 
 //Components
 import Header from "./components/Header";
-import { CrimeProvider, CrimeProvider2 } from "./CrimeContext";
+import { CrimeProvider } from "./CrimeContext";
 
 //Styling
 import "./App.css";
@@ -75,9 +75,7 @@ function App() {
 
   return (
     <StyledApp>
-      <CrimeProvider2>
-        <Header />
-      </CrimeProvider2>
+      <Header />
       <CrimeProvider>
         <Routes location={location} key={location.pathname}>
           <Route exact path="/" element={<Home />} />

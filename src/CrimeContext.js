@@ -22,23 +22,3 @@ export const CrimeProvider = (props) => {
     </CrimeContext.Provider>
   );
 };
-
-export const CrimeProvider2 = (props) => {
-  const [oriValue, setOri] = useState("MA00");
-  const [offenseValue, setOffense] = useState("burg");
-  const [fromDateValue, setFromDate] = useState(1996);
-  const [toDateValue, setToDate] = useState(2019);
-
-  const states = [
-    { ori: [oriValue, setOri] },
-    { offense: [offenseValue, setOffense] },
-    { fromDate: [fromDateValue, setFromDate] },
-    { toDate: [toDateValue, setToDate] },
-  ];
-
-  return (
-    <CrimeContext2.Provider value={states}>
-      {props.children}
-    </CrimeContext2.Provider>
-  );
-};

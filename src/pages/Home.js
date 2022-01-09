@@ -30,30 +30,15 @@ const Home = () => {
     { boston: "MA0130100" },
   ];
 
-  const fetchApi = async () => {
-    try {
-      const data = await axios.get(full_url);
-      console.log(data);
-      return data.data.results;
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  //   useEffect(() => {
-  //     fetchApi().then((data) => {
-  //       setCrimeData(data);
-  //       setLoading(false);
-  //     });
-  //   }, []);
-
-  const fetchData = () => {
-    fetchApi().then((data) => {
-      setCrimeData(data);
-      setLoading(false);
-      setInitialLoad("Results");
-    });
-  };
+  function ErrorFallback({ error, resetErrorBoundary }) {
+    return (
+      <div role="alert">
+        <p>Something went wrong:</p>
+        <pre>{error.message}</pre>
+        <button onClick={resetErrorBoundary}>Try again</button>
+      </div>
+    );
+  }
 
   return (
     <StyledHome>
@@ -68,6 +53,7 @@ const Home = () => {
           fromDate={fromDate}
           setFromDate={setFromDate}
           setCrimeData={setCrimeData}
+          isLoading={isLoading}
           setLoading={setLoading}
           setInitialLoad={setInitialLoad}
           url={full_url}
@@ -81,10 +67,12 @@ const Home = () => {
           </Link>
         </div>
       </div>
+
       {initialLoad && <h2>{initialLoad}</h2>}
       <div className="grid-container">
-        {isLoading && crimeData.map((data, i) => <PlaceholderCard />)}
-        {!isLoading && crimeData.map((data, i) => <Card data={data} />)}
+        {isLoading && crimeData.map((data, i) => <PlaceholderCard key={i} />)}
+        {!isLoading &&
+          crimeData.map((data, i) => <Card data={data} key={data.data_year} />)}
       </div>
     </StyledHome>
   );
