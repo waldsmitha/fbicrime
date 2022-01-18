@@ -1,23 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 
 //Styling
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { CrimeContext } from "../CrimeContext";
 
 const About = () => {
-  const value = useContext(CrimeContext);
-
-  const [ori, offense, fromDate, toDate] = useContext(CrimeContext);
-  const [oriValue, setOri] = ori.ori;
-
   return (
     <StyledAbout>
-      {/* <div>{oriValue}</div> */}
-      {/* Adding to state */}
-      {/* <button onClick={() => setOri((prevOri) => [...prevOri] + "test")}>
-        SetOri
-      </button> */}
       <h2>About Menu</h2>
       <div className="content">
         <p>
@@ -55,6 +44,8 @@ const About = () => {
 
 const StyledAbout = styled(motion.div)`
   padding: 2rem;
+  max-width: 120rem;
+  margin: 0 auto;
 
   h2 {
     margin-bottom: 1rem;

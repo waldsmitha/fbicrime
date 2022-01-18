@@ -44,7 +44,7 @@ h3 {
 h4 {
     font-size: ${h4};
 }
-p,label,input,button {
+p,label,input,button, select {
     font-size: ${p};
     font-size: 18px;
     line-height: 140%;
