@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 
-const Toggle = ({ children, title }) => {
-  const [toggle, setToggle] = useState(false);
+const Toggle = ({ children, title, state }) => {
+  const [toggle, setToggle] = useState(state);
   return (
     <motion.div layout>
       {toggle ? children : ""}
       <motion.h4 layout onClick={() => setToggle(!toggle)}>
         {title}
       </motion.h4>
-
-      <div className="faq-line"></div>
     </motion.div>
   );
 };

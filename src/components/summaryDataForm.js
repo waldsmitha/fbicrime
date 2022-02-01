@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useCallback } from "react";
 
 //Styling
 import styled from "styled-components";
@@ -8,12 +8,22 @@ import { motion } from "framer-motion";
 import { CrimeContext } from "../CrimeContext";
 
 //API
-import { fetchApi } from "../api";
+import { fetchSelectionApi } from "../api";
 
 const SelectionMenu = () => {
+  useEffect(() => {
+    console.log("form rendered");
+  }, []);
   //State
   const { crimeState, crimeDispatch } = useContext(CrimeContext);
-  const { ori, offense, fromDate, toDate, isLoading } = crimeState;
+  const {
+    isLoading,
+    crimeData,
+    crimeDataHistory,
+    payload,
+    inputs,
+  } = crimeState;
+  const { ori, offense, fromDate, toDate } = inputs;
 
   //Actions
   const updateInput = (e) => {
@@ -23,15 +33,32 @@ const SelectionMenu = () => {
     });
   };
 
+  const sameInput = (obj1, obj2) => {
+    if (
+      obj1.ori !== obj2.ori ||
+      obj1.offense !== obj2.offense ||
+      obj1.toDate !== obj2.toDate ||
+      obj1.fromDate !== obj2.fromDate
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    crimeDispatch({ type: "LOAD_DATA" });
+    const obj1 = crimeDataHistory[crimeDataHistory.length - 1] || {};
+    const obj2 = inputs;
+    if (sameInput(obj1, obj2)) {
+      crimeDispatch({ type: "LOAD_DATA" });
 
-    await fetchApi(ori, offense, fromDate, toDate)
-      .then((data) => {
-        crimeDispatch({ type: "SUCCESS", payload: data });
-      })
-      .catch((e) => crimeDispatch({ type: "ERROR" }));
+      await fetchSelectionApi(ori, offense, fromDate, toDate)
+        .then((data) => {
+          crimeDispatch({ type: "SUCCESS", payload: data });
+        })
+        .catch((e) => crimeDispatch({ type: "ERROR" }));
+    } else return;
   };
 
   const clearData = (e) => {
@@ -48,9 +75,10 @@ const SelectionMenu = () => {
             <label htmlFor="ORI">ORI</label>
             <input
               type="text"
-              placeholder={ori}
+              // placeholder={ori}
               name="ori"
-              onChange={updateInput}
+              value={ori}
+              onChange={(e) => updateInput(e)}
               required
             />
           </div>
@@ -66,6 +94,7 @@ const SelectionMenu = () => {
             <select
               name="offense"
               placeholder={offense}
+              value={offense}
               onChange={updateInput}
               required
             >
@@ -86,8 +115,9 @@ const SelectionMenu = () => {
               min="1990"
               max="2020"
               step="1"
-              placeholder={fromDate}
+              // placeholder={fromDate}
               name="fromDate"
+              value={fromDate}
               onChange={updateInput}
               required
             />
@@ -99,7 +129,8 @@ const SelectionMenu = () => {
               min="1990"
               max="2020"
               step="1"
-              placeholder={toDate}
+              // placeholder={toDate}
+              value={toDate}
               name="toDate"
               onChange={updateInput}
               required
@@ -121,6 +152,7 @@ const StyledSelectionMenu = styled(motion.div)`
   padding: 2rem;
   margin: 2rem;
   border: 2px dashed #53d126;
+  /* height: 550px; */
 
   h2 {
     text-align: center;

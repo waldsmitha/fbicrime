@@ -3,16 +3,24 @@ import { createContext } from "react";
 export const CrimeContext = createContext();
 
 export const initialCrimeState = {
-  ori: "MA0092700",
-  offense: "arson",
-  fromDate: 1995,
-  toDate: 2020,
+  inputs: {
+    ori: "MA0092700",
+    offense: "arson",
+    fromDate: 1995,
+    toDate: 2020,
+  },
   isLoading: false,
   loadStatusText: "",
   isLoaded: false,
   crimeData: [],
   crimeDataHistory: "",
   error: "",
+  payload: "",
+  stateOris: {
+    stateAbbr: "",
+    isLoading: false,
+    data: [],
+  },
 };
 
 //Remove duplicates from crimeDataHistory
@@ -22,11 +30,48 @@ export const crimeReducer = (state, { type, payload }) => {
     case "UPDATE":
       return {
         ...state,
-        [payload.key]: payload.value,
+        inputs: {
+          ...state.inputs,
+          [payload.key]: payload.value,
+        },
+      };
+    case "UPDATE_ORI_SEARCH":
+      return {
+        ...state,
+        stateOris: {
+          ...state.stateOris,
+          [payload.key]: payload.value,
+        },
+      };
+    case "ORI_SEARCH_SUBMIT":
+      return {
+        ...state,
+        stateOris: {
+          ...state.stateOris,
+          isLoading: true,
+        },
+      };
+    case "ORI_SEARCH_SUCCESS":
+      return {
+        ...state,
+        stateOris: {
+          ...state.stateOris,
+          data: payload,
+          isLoading: false,
+        },
+      };
+    case "UPDATE_ORI_FROM_LIST":
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          ori: payload,
+        },
       };
     case "LOAD_DATA":
       return {
         ...state,
+        crimeData: [],
         isLoading: true,
         loadStatusText: "Loading...",
       };
@@ -40,10 +85,10 @@ export const crimeReducer = (state, { type, payload }) => {
         crimeDataHistory: [
           ...state.crimeDataHistory,
           {
-            ori: state.ori,
-            offense: state.offense,
-            fromDate: state.fromDate,
-            toDate: state.toDate,
+            ori: state.inputs.ori,
+            offense: state.inputs.offense,
+            fromDate: state.inputs.fromDate,
+            toDate: state.inputs.toDate,
             payload: [...payload],
           },
         ],

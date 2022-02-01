@@ -14,6 +14,7 @@ import { AnimateSharedLayout, motion } from "framer-motion";
 const HistorySelectionTool = () => {
   const { crimeState, crimeDispatch } = useContext(CrimeContext);
   const { crimeDataHistory } = crimeState;
+  const chronologicalHistory = [...crimeDataHistory].reverse();
 
   const updateCrimeData = (item) => {
     crimeDispatch({ type: "SELECT_HISTORY", payload: item.payload });
@@ -22,11 +23,11 @@ const HistorySelectionTool = () => {
   return (
     <StyledHistorySelectionTool>
       <AnimateSharedLayout>
-        <Toggle title="Search History">
+        <Toggle title="Search History" state={false}>
           <motion.div className="search-container" layout>
-            {crimeDataHistory ? (
+            {chronologicalHistory ? (
               <>
-                {crimeDataHistory.map((item, i) => (
+                {chronologicalHistory.map((item, i) => (
                   <ul key={`history${i}`} onClick={() => updateCrimeData(item)}>
                     <li>{item.ori}</li>
                     <li>{item.offense}</li>
@@ -53,6 +54,7 @@ const StyledHistorySelectionTool = styled(motion.div)`
   color: black;
   min-width: 300px;
   margin: 0;
+  z-index: 10;
 
   .search-container {
     max-height: 400px;

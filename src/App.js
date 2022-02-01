@@ -90,7 +90,8 @@ function App() {
       >
         <Routes location={location} key={location.pathname}>
           <Route exact path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route exact path="/about" element={<About />} />
+          <Route path="/about/:id" element={<Help />} />
           <Route path="/help" element={<Help />} />
         </Routes>
       </CrimeContext.Provider>
