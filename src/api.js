@@ -1,5 +1,8 @@
 import axios from "axios";
 
+const api_key = "RnB11smJPJgbMz12xdd3ahybuWdmif2ZsUsaWy8p";
+const base_url = "https://api.usa.gov/crime/fbi/sapi";
+
 export const fetchSelectionApi = async (ori, offense, fromDate, toDate) => {
   const api_key = "RnB11smJPJgbMz12xdd3ahybuWdmif2ZsUsaWy8p";
   const base_url = "https://api.usa.gov/crime/fbi/sapi";

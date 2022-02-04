@@ -18,6 +18,7 @@ import { fetchSummaryApi } from "../api";
 import ResultsSummary from "../components/ResultsSummary";
 import ResultsSummaryChart from "../components/ResultsSummaryChart";
 import ORILookup from "../components/ORILookup";
+import { useAxios } from "../components/useAxios";
 
 const Home = () => {
   const { crimeState } = useContext(CrimeContext);
@@ -89,12 +90,11 @@ const Home = () => {
     },
   };
 
-  const {
-    arsonText,
-    burglaryText,
-    homicideText,
-    violentCrimeText,
-  } = nationalText;
+  const { arsonText, burglaryText, homicideText, violentCrimeText } =
+    nationalText;
+  const url = "https://jsonplaceholder.typicode.com/todos/1";
+  const { loading, error, data } = useAxios(url);
+  console.log(loading, error, data);
 
   return (
     <StyledHome>
