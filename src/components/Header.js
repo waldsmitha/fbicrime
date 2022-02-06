@@ -39,9 +39,7 @@ const StyledHeader = styled(motion.div)`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  h1 {
-    color: #53d126;
-  }
+
   .logo {
     position: fixed;
     top: 2rem;
@@ -64,14 +62,13 @@ const StyledNav = styled(motion.div)`
   }
   li {
     cursor: pointer;
-    color: #53d126;
+
     text-transform: uppercase;
     margin: 2rem;
   }
   a {
-    border: 3px solid #53d126;
     padding: 0.5rem 2rem;
-    color: #53d126;
+
     transition: 0.25s;
     &:hover {
       background: #53d126;

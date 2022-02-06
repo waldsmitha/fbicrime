@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useReducer } from "react";
+import { useEffect, useReducer, createContext } from "react";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 
@@ -10,7 +9,8 @@ import Help from "./pages/Help";
 
 //Components
 import Header from "./components/Header";
-import { CrimeContext, crimeReducer, initialCrimeState } from "./CrimeContext";
+import { CrimeContext } from "./CrimeContext";
+import { crimeReducer, initialCrimeState } from "./reducers/crimeReducer";
 import {
   getStorageValue,
   pushSessionStorage,
@@ -20,40 +20,6 @@ import "./App.css";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import GlobalStyles from "./components/GlobalStyles";
-
-// export const CounterContext = createContext();
-
-// // const initialState = 0;
-// // const countReducer = (state, { type, payload }) => {
-// //   switch (type) {
-// //     case "INCREMENT":
-// //       return state + payload;
-// //     case "DECREMENT":
-// //       return state - payload;
-// //     case "RESET":
-// //       return initialState;
-// //     default:
-// //       throw new Error(`Unknown action type: ${type}`);
-// //   }
-// // };
-
-// const difReducer = (state, action) => {
-//   let array;
-//   switch (action.type) {
-//     case "ADD":
-//       array = [...state];
-//       array.push(action.payload);
-//       return array;
-//     case "REMOVE":
-//       array = [...state];
-//       array.pop();
-//       return array;
-//     case "CLEAR":
-//       return (state = []);
-//     default:
-//       break;
-//   }
-// };
 
 function App() {
   const location = useLocation();

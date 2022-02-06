@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { motion, transform } from "framer-motion";
+import { motion } from "framer-motion";
 
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -29,12 +29,12 @@ const ResultsSummaryChart = ({ crimeData }) => {
       },
       crosshair: true,
       style: {
-        color: "#53d126",
+        // color: "#53d126",
       },
       title: {
         text: "Year",
         style: {
-          color: "#53d126",
+          // color: "#53d126",
         },
       },
     },
@@ -48,7 +48,7 @@ const ResultsSummaryChart = ({ crimeData }) => {
       title: {
         text: "Incidents",
         style: {
-          color: "#53d126",
+          // color: "#53d126",
         },
       },
     },
@@ -56,7 +56,7 @@ const ResultsSummaryChart = ({ crimeData }) => {
     title: {
       text: crimeData[0].offense,
       style: {
-        color: "#53d126",
+        // color: "#53d126",
       },
     },
     series: [{ data: count, showInLegend: false, color: "#53d126" }],

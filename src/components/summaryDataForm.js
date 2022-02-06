@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React, { useContext, useEffect } from "react";
 
 //Styling
 import styled from "styled-components";
@@ -7,30 +7,34 @@ import { motion } from "framer-motion";
 //Context
 import { CrimeContext } from "../CrimeContext";
 
+//Actions
+import useCrimeSearchActions from "../actions/crimeSearchActions";
+
 //API
-import { fetchSelectionApi } from "../api";
+import axios from "axios";
+import { crimeLookupUrl } from "../api";
 
 const SelectionMenu = () => {
+  const {
+    crimeSearchUpdateInput,
+    crimeSearchLoadData,
+    crimeSearchSuccess,
+    crimeSearchError,
+    crimeSearchClear,
+  } = useCrimeSearchActions();
+
   useEffect(() => {
     console.log("form rendered");
   }, []);
+
   //State
-  const { crimeState, crimeDispatch } = useContext(CrimeContext);
-  const {
-    isLoading,
-    crimeData,
-    crimeDataHistory,
-    payload,
-    inputs,
-  } = crimeState;
+  const { crimeState } = useContext(CrimeContext);
+  const { isLoading, crimeDataHistory, inputs } = crimeState;
   const { ori, offense, fromDate, toDate } = inputs;
 
-  //Actions
   const updateInput = (e) => {
-    crimeDispatch({
-      type: "UPDATE",
-      payload: { key: e.target.name, value: e.target.value },
-    });
+    let payload = { key: e.target.name, value: e.target.value };
+    crimeSearchUpdateInput(payload);
   };
 
   const sameInput = (obj1, obj2) => {
@@ -51,19 +55,21 @@ const SelectionMenu = () => {
     const obj1 = crimeDataHistory[crimeDataHistory.length - 1] || {};
     const obj2 = inputs;
     if (sameInput(obj1, obj2)) {
-      crimeDispatch({ type: "LOAD_DATA" });
+      crimeSearchLoadData();
 
-      await fetchSelectionApi(ori, offense, fromDate, toDate)
+      axios
+        .get(crimeLookupUrl(ori, offense, fromDate, toDate))
         .then((data) => {
-          crimeDispatch({ type: "SUCCESS", payload: data });
+          let res = data.data.results;
+          crimeSearchSuccess(res);
         })
-        .catch((e) => crimeDispatch({ type: "ERROR" }));
+        .catch((e) => crimeSearchError());
     } else return;
   };
 
   const clearData = (e) => {
     e.preventDefault();
-    crimeDispatch({ type: "CLEAR" });
+    crimeSearchClear();
   };
 
   return (
@@ -151,22 +157,20 @@ const SelectionMenu = () => {
 const StyledSelectionMenu = styled(motion.div)`
   padding: 2rem;
   margin: 2rem;
-  border: 2px dashed #53d126;
+
   /* height: 550px; */
 
   h2 {
     text-align: center;
     margin: 2.5rem 0;
-    border-bottom: dashed 2px #53d126;
   }
   button,
   input {
-    color: #53d126;
     text-transform: uppercase;
   }
   input {
     border: none;
-    border-bottom: 3px solid #53d126;
+
     background: none;
     cursor: text;
     margin-left: 2rem;
@@ -187,7 +191,6 @@ const StyledSelectionMenu = styled(motion.div)`
   } */
 
   button {
-    border: 3px solid #53d126;
     background: none;
     cursor: pointer;
     margin-top: 2rem;
@@ -202,15 +205,13 @@ const StyledSelectionMenu = styled(motion.div)`
 
   option {
     background: black;
-    color: #53d126;
+
     border: none;
   }
   select {
     background: none;
     border: none;
-    border-bottom: 3px solid #53d126;
 
-    color: #53d126;
     width: 150px;
   }
 

@@ -18,7 +18,7 @@ const Card = ({ data }) => {
 const StyledCard = styled(motion.div)`
   margin: 2rem;
   padding: 2rem;
-  border: dashed 2px #53d126;
+  /* border: dashed 2px #53d126; */
 `;
 
 export default Card;

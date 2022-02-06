@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 //Context
 import { CrimeContext } from "../CrimeContext";
+//Actions
+import useOriActions from "../actions/oriLookupActions";
 //Components
-import { fetchOriApi } from "../api";
+import { oriLookupUrl } from "../api";
 //Styling
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import Toggle from "./Toggle";
+import axios from "axios";
 
 const ORILookup = () => {
   //State
@@ -16,27 +19,33 @@ const ORILookup = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  //Functions
-  const submitForm = async (e) => {
-    e.preventDefault();
-    console.log("state ori search submitted");
-    crimeDispatch({ type: "ORI_SEARCH_SUBMIT" });
+  const {
+    oriSearchSubmit,
+    oriSearchSuccess,
+    oriUpdateInput,
+    oriUpdateFromList,
+  } = useOriActions();
 
-    await fetchOriApi(stateOris.stateAbbr)
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    oriSearchSubmit();
+
+    axios
+      .get(oriLookupUrl(stateOris.stateAbbr))
       .then((data) => {
-        crimeDispatch({ type: "ORI_SEARCH_SUCCESS", payload: data });
-        setSearchResults(data);
+        let res = data.data.results;
+        oriSearchSuccess(res);
+        setSearchResults(res);
       })
       .catch((e) => console.log(e));
   };
 
   const updateInput = (e) => {
-    const input = e.target.value;
-    const capitalizedInput = input.toUpperCase();
-    crimeDispatch({
-      type: "UPDATE_ORI_SEARCH",
-      payload: { key: e.target.name, value: capitalizedInput },
-    });
+    const value = e.target.value.toUpperCase();
+    const key = e.target.name;
+    let payload = { key, value };
+    oriUpdateInput(payload);
   };
 
   const handleFilter = (e) => {
@@ -46,19 +55,13 @@ const ORILookup = () => {
   };
 
   const updateOriFromList = (data) => {
-    console.log(data);
-    crimeDispatch({
-      type: "UPDATE_ORI_FROM_LIST",
-      payload: data,
-    });
+    oriUpdateFromList(data);
   };
 
-  //useEffects
+  // //useEffects
   useEffect(() => {
-    console.log(stateOris);
-    console.log(searchTerm);
-    console.log(searchResults);
-  }, [stateOris, searchTerm]);
+    console.log("Ori rendered");
+  }, []);
 
   useEffect(() => {
     const results = stateOris.data.filter((o) =>
@@ -104,7 +107,7 @@ const ORILookup = () => {
 
         <Toggle title={""} state={true} className="toggle-ori">
           <div className="ori-search-results">
-            {searchResults &&
+            {searchResults.length > 0 &&
               searchResults.map((data) => (
                 <p key={data.ori} onClick={() => updateOriFromList(data.ori)}>
                   {data.agency_name}: {data.ori}
@@ -120,7 +123,9 @@ const ORILookup = () => {
 const StyledORILookup = styled(motion.div)`
   margin: 2rem;
   padding: 2rem;
-  border: dashed 2px #53d126;
+  /* border: dashed 2px #53d126; */
+  border-radius: 2rem;
+  background: #3e4144;
   /* height: 550px; */
   h2 {
     text-align: left;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { motion, transform } from "framer-motion";
+import { motion } from "framer-motion";
 
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -24,12 +24,12 @@ const BarChart = ({ data, dateRange, text }) => {
       },
       crosshair: true,
       style: {
-        color: "#53d126",
+        // color: "#53d126",
       },
       title: {
         text: "Years (2000 - 2020)",
         style: {
-          color: "#53d126",
+          // color: "#53d126",
         },
       },
     },
@@ -43,7 +43,7 @@ const BarChart = ({ data, dateRange, text }) => {
       title: {
         text: "Incidents",
         style: {
-          color: "#53d126",
+          // color: "#53d126",
         },
       },
     },
@@ -51,7 +51,7 @@ const BarChart = ({ data, dateRange, text }) => {
     title: {
       text: text.title,
       style: {
-        color: "#53d126",
+        // color: "#53d126",
       },
     },
     series: [{ data: data, showInLegend: false, color: "#53d126" }],

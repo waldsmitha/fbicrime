@@ -1,52 +1,48 @@
 import { useContext, useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
-
 //Components
 import Card from "../components/Card";
 import PlaceholderCard from "../components/PlaceholderCard";
 import SelectionMenu from "../components/summaryDataForm";
 import HistorySelectionTool from "../components/HistorySelectionTool";
 import BarChart from "../components/BarChart";
+import ResultsSummary from "../components/ResultsSummary";
+import ResultsSummaryChart from "../components/ResultsSummaryChart";
+import ORILookup from "../components/ORILookup";
+//Hooks
+import useUpdateEffect from "../hooks/useUpdateEffect";
+import useAxios from "../hooks/useAxios";
 //Context
 import { CrimeContext } from "../CrimeContext";
 //Styling
 import styled from "styled-components";
 import { motion } from "framer-motion";
-
-import { fetchSummaryApi } from "../api";
-import ResultsSummary from "../components/ResultsSummary";
-import ResultsSummaryChart from "../components/ResultsSummaryChart";
-import ORILookup from "../components/ORILookup";
+//API
+import { nationalStatsUrl } from "../api";
 
 const Home = () => {
+  //Global State
   const { crimeState } = useContext(CrimeContext);
   const { crimeData, isLoading, loadStatusText } = crimeState;
-
+  //Local State
   const [summaryData, setSummaryData] = useState([]);
   const [nationalArson, setNationalArson] = useState();
   const [nationalBurglary, setNationalBurglary] = useState([]);
   const [nationalHomicide, setNationalHomicide] = useState([]);
   const [nationalViolentCrime, setNationalViolentCrime] = useState([]);
-
   const [dateRange, setDateRange] = useState([]);
-  const fetchData = async () => {
-    const data = await fetchSummaryApi(2000, 2020);
-    // console.log(data);
-    return data;
-  };
+
+  const { data, error, loading } = useAxios(nationalStatsUrl(2000, 2020));
 
   useEffect(() => {
     console.log("Home Rendered");
   }, []);
 
-  useEffect(() => {
-    if (summaryData.length > 0) return;
-    fetchData().then((res) => {
-      const sortedData = sortDescending(res, "year");
-      setSummaryData(sortedData);
-    });
-  }, []);
+  useUpdateEffect(() => {
+    const res = data.data.results;
+    const sortedData = sortDescending(res, "year");
+    setSummaryData(sortedData);
+  }, [data]);
 
   const sortDescending = (data, key) => {
     //key needs to be a string
@@ -155,10 +151,8 @@ const StyledHome = styled(motion.div)`
     text-align: center;
   }
   button {
-    border: 3px solid #53d126;
     background: none;
     cursor: pointer;
-    color: #53d126;
     text-transform: uppercase;
     padding: 0.5rem 2rem;
   }

@@ -59,8 +59,12 @@ li {
 
 
 body {
-    background: #000000;
-    color: #53D126;
+
+    background: #342F32;
+background: -webkit-linear-gradient(right, #342F32, #2C375F);
+background: -moz-linear-gradient(right, #342F32, #2C375F);
+background: linear-gradient(to left, #342F32, #2C375F);
+    color: #93a6aa;
     font-family: sans-serif;
     font-weight: 300;
     height: 100%;

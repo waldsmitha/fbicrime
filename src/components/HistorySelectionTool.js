@@ -50,7 +50,7 @@ const StyledHistorySelectionTool = styled(motion.div)`
   position: fixed;
   bottom: 0;
   right: 0;
-  background: #53d126;
+
   color: black;
   min-width: 300px;
   margin: 0;
@@ -77,10 +77,9 @@ const StyledHistorySelectionTool = styled(motion.div)`
 
   h4 {
     cursor: pointer;
-    background: black;
-    color: #53d126;
+
     padding: 0.5rem;
-    border: 2px solid #53d126;
+
     font-weight: 300;
   }
 `;
