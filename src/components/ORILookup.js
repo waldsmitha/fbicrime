@@ -41,8 +41,8 @@ const ORILookup = () => {
 
   const handleFilter = (e) => {
     const result = e.target.value;
-    const capitalizedResults = result.charAt(0).toUpperCase() + result.slice(1);
-    setSearchTerm(capitalizedResults);
+    // const capitalizedResults = result.charAt(0).toUpperCase() + result.slice(1);
+    setSearchTerm(result);
   };
 
   const updateOriFromList = (data) => {
@@ -54,15 +54,15 @@ const ORILookup = () => {
   };
 
   //useEffects
-  useEffect(() => {
-    console.log(stateOris);
-    console.log(searchTerm);
-    console.log(searchResults);
-  }, [stateOris, searchTerm]);
+  // useEffect(() => {
+  //   console.log(stateOris);
+  //   console.log(searchTerm);
+  //   console.log(searchResults);
+  // }, [stateOris, searchTerm]);
 
   useEffect(() => {
     const results = stateOris.data.filter((o) =>
-      o.agency_name.includes(searchTerm)
+      o.agency_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(results);
   }, [searchTerm]);

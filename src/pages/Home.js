@@ -92,9 +92,6 @@ const Home = () => {
 
   const { arsonText, burglaryText, homicideText, violentCrimeText } =
     nationalText;
-  const url = "https://jsonplaceholder.typicode.com/todos/1";
-  const { loading, error, data } = useAxios(url);
-  console.log(loading, error, data);
 
   return (
     <StyledHome>
