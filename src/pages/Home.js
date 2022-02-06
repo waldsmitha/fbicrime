@@ -17,8 +17,17 @@ import { CrimeContext } from "../CrimeContext";
 //Styling
 import styled from "styled-components";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 //API
 import { nationalStatsUrl } from "../api";
+=======
+
+import { fetchSummaryApi } from "../api";
+import ResultsSummary from "../components/ResultsSummary";
+import ResultsSummaryChart from "../components/ResultsSummaryChart";
+import ORILookup from "../components/ORILookup";
+import { useAxios } from "../components/useAxios";
+>>>>>>> 21d4c68247b97b56b2f7458329450c2d0f0b381f
 
 const Home = () => {
   //Global State
@@ -85,12 +94,11 @@ const Home = () => {
     },
   };
 
-  const {
-    arsonText,
-    burglaryText,
-    homicideText,
-    violentCrimeText,
-  } = nationalText;
+  const { arsonText, burglaryText, homicideText, violentCrimeText } =
+    nationalText;
+  const url = "https://jsonplaceholder.typicode.com/todos/1";
+  const { loading, error, data } = useAxios(url);
+  console.log(loading, error, data);
 
   return (
     <StyledHome>
