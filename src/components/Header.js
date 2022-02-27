@@ -26,6 +26,12 @@ const Header = () => {
           <li>
             <Link to="About">About</Link>
           </li>
+          {/* <li>
+            <Link to="crimecomparison">Crime Comparison</Link>
+          </li> */}
+          <li>
+            <Link to="hackerstories">Hacker Stories</Link>
+          </li>
         </ul>
       </StyledNav>
     </StyledHeader>

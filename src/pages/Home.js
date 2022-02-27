@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 //Components
@@ -14,28 +14,26 @@ import { CrimeContext } from "../CrimeContext";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { fetchSummaryApi } from "../api";
 import ResultsSummary from "../components/ResultsSummary";
 import ResultsSummaryChart from "../components/ResultsSummaryChart";
 import ORILookup from "../components/ORILookup";
 import { useAxios } from "../components/useAxios";
 
+//URLs
+import { Urls } from "../api";
+
 const Home = () => {
   const { crimeState } = useContext(CrimeContext);
-  const { crimeData, isLoading, loadStatusText } = crimeState;
+  const { crimeData, isLoading, loadStatusText, crimeDataHistory } = crimeState;
 
   const [summaryData, setSummaryData] = useState([]);
   const [nationalArson, setNationalArson] = useState();
   const [nationalBurglary, setNationalBurglary] = useState([]);
   const [nationalHomicide, setNationalHomicide] = useState([]);
   const [nationalViolentCrime, setNationalViolentCrime] = useState([]);
-
   const [dateRange, setDateRange] = useState([]);
-  const fetchData = async () => {
-    const data = await fetchSummaryApi(2000, 2020);
-    // console.log(data);
-    return data;
-  };
+
+  const { nationalStatsUrl } = Urls();
 
   useEffect(() => {
     console.log("Home Rendered");
@@ -43,8 +41,8 @@ const Home = () => {
 
   useEffect(() => {
     if (summaryData.length > 0) return;
-    fetchData().then((res) => {
-      const sortedData = sortDescending(res, "year");
+    axios.get(nationalStatsUrl()).then((res) => {
+      const sortedData = sortDescending(res.data.results, "year");
       setSummaryData(sortedData);
     });
   }, []);
@@ -90,8 +88,12 @@ const Home = () => {
     },
   };
 
-  const { arsonText, burglaryText, homicideText, violentCrimeText } =
-    nationalText;
+  const {
+    arsonText,
+    burglaryText,
+    homicideText,
+    violentCrimeText,
+  } = nationalText;
 
   return (
     <StyledHome>

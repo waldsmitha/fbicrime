@@ -1,32 +1,36 @@
-import axios from "axios";
-
-export const Urls = () => {
+const useUrls = () => {
   const api_key = "RnB11smJPJgbMz12xdd3ahybuWdmif2ZsUsaWy8p";
   const base_url = "https://api.usa.gov/crime/fbi/sapi";
 
-  const fetchCrimeSearchApi = async (ori, offense, fromDate, toDate) => {
+  function sum(a, b) {
+    return a + b;
+  }
+
+  const crimeSearchURL = (
+    ori = "MA0092700",
+    offense = "arson",
+    fromDate = 2000,
+    toDate = 2020
+  ) => {
     const url_extension = `/api/summarized/agencies/${ori}/${offense}/${fromDate}/${toDate}`;
     const full_url = `${base_url}${url_extension}?API_KEY=${api_key}`;
-    const data = await axios.get(full_url);
-    return data.data.results;
+    return full_url;
   };
 
-  const nationalStatsUrl = (summaryFromDate = 2000, summaryToDate = 2020) => {
+  const nationalStatsURL = (summaryFromDate = 2000, summaryToDate = 2020) => {
     const url_extension = `/api/estimates/national/${summaryFromDate}/${summaryToDate}`;
     const full_url = `${base_url}${url_extension}?API_KEY=${api_key}`;
     return full_url;
   };
 
-  const fetchOriApi = async (stateAbbr) => {
+  const oriSearchURL = (stateAbbr) => {
     const url_extension = `/api/agencies/byStateAbbr/${stateAbbr}`;
     const full_url = `${base_url}${url_extension}?API_KEY=${api_key}`;
-    const data = await axios.get(full_url);
-    return data.data.results;
+    return full_url;
+    // console.log("test");
   };
 
-  return {
-    fetchOriApi,
-    fetchCrimeSearchApi,
-    nationalStatsUrl,
-  };
+  return { sum, crimeSearchURL, nationalStatsURL, oriSearchURL };
 };
+
+export default useUrls;

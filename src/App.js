@@ -7,6 +7,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import Help from "./pages/Help";
+import CrimeComparison from "./pages/CrimeComparison";
+import HackerStories from "./pages/HackerStories";
 
 //Components
 import Header from "./components/Header";
@@ -91,6 +93,8 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
+          <Route exact path="/crimecomparison" element={<CrimeComparison />} />
+          <Route path="/hackerstories" element={<HackerStories />} />
           <Route path="/about/:id" element={<Help />} />
           <Route path="/help" element={<Help />} />
         </Routes>

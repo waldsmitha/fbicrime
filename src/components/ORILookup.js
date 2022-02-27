@@ -2,11 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 //Context
 import { CrimeContext } from "../CrimeContext";
 //Components
-import { fetchOriApi } from "../api";
+// import { fetchOriApi } from "../api";
 //Styling
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import Toggle from "./Toggle";
+
+//Urls
+import { Urls } from "../api";
 
 const ORILookup = () => {
   //State
@@ -15,6 +18,8 @@ const ORILookup = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+
+  const { fetchOriApi } = Urls();
 
   //Functions
   const submitForm = async (e) => {

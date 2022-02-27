@@ -13,7 +13,9 @@ export const initialCrimeState = {
   loadStatusText: "",
   isLoaded: false,
   crimeData: [],
-  crimeDataHistory: "",
+  crimeDataHistory: [],
+  crimeComparison1: {},
+  crimeComparison2: {},
   error: "",
   payload: "",
   stateOris: {

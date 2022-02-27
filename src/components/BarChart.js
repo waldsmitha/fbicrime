@@ -14,6 +14,7 @@ const BarChart = ({ data, dateRange, text }) => {
     chart: {
       type: "column",
       backgroundColor: "none",
+      height: 300,
     },
     xAxis: {
       categories: dateRange,
@@ -64,6 +65,8 @@ const BarChart = ({ data, dateRange, text }) => {
   );
 };
 
-const StyledBarChart = styled(motion.div)``;
+const StyledBarChart = styled(motion.div)`
+  /* max-height: 300px; */
+`;
 
 export default BarChart;

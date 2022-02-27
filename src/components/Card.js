@@ -8,8 +8,8 @@ const Card = ({ data }) => {
   return (
     <StyledCard>
       <p>Year: {data.data_year}</p>
-      <p>Offense: {data.offense}</p>
-      <p>State: {data.state_abbr}</p>
+      {/* <p>Offense: {data.offense}</p> */}
+      {/* <p>State: {data.state_abbr}</p> */}
       <p>Number: {data.actual}</p>
     </StyledCard>
   );

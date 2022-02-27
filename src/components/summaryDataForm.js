@@ -8,9 +8,11 @@ import { motion } from "framer-motion";
 import { CrimeContext } from "../CrimeContext";
 
 //API
-import { fetchSelectionApi } from "../api";
+import { Urls } from "../api";
 
 const SelectionMenu = () => {
+  const { fetchCrimeSearchApi } = Urls();
+
   useEffect(() => {
     console.log("form rendered");
   }, []);
@@ -53,7 +55,7 @@ const SelectionMenu = () => {
     if (sameInput(obj1, obj2)) {
       crimeDispatch({ type: "LOAD_DATA" });
 
-      await fetchSelectionApi(ori, offense, fromDate, toDate)
+      await fetchCrimeSearchApi(ori, offense, fromDate, toDate)
         .then((data) => {
           crimeDispatch({ type: "SUCCESS", payload: data });
         })

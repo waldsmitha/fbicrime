@@ -8,6 +8,7 @@ import HighchartsReact from "highcharts-react-official";
 const ResultsSummaryChart = ({ crimeData }) => {
   const [dates, setDates] = useState([]);
   const [count, setCount] = useState([]);
+  // console.log(crimeData);
 
   useEffect(() => {
     console.log("summary chart rendered");
@@ -59,7 +60,10 @@ const ResultsSummaryChart = ({ crimeData }) => {
         color: "#53d126",
       },
     },
-    series: [{ data: count, showInLegend: false, color: "#53d126" }],
+    series: [
+      { data: count, showInLegend: false, color: "#53d126" },
+      // { data: count, showInLegend: true, color: "#3d6130", name: "test" },
+    ],
   };
 
   return (
